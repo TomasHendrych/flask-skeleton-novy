@@ -81,10 +81,25 @@ def chart():
     values = [10, 9, 8, 7, 6, 4, 7, 8]
     return render_template('chart.html', values=values, labels=labels, legend=legend)
 
+from flask import flash
+from ..data.models import Parent
+from ..data.models import Child
+
 @blueprint.route('/vstup_rodic',methods=['GET','POST'])
 def rodic():
     from .forms import ValidateParent
     form = ValidateParent()
-    if form.validate_on_submit():
-        return "OK"
+    if form.is_submitted():
+        Parent.create(**form.data)
+        flash(message="Ulozeno",category="info")
     return render_template('public/rodic.tmpl', form=form)
+
+@blueprint.route('/vstup_dite',methods=['GET','POST'])
+def dite():
+    from .forms import ValidateChild
+    form = ValidateChild()
+    form.parent_id.data = db.session.query(Parent).all()
+    if form.is_submitted():
+        Child.create(**form.data)
+        flash(message="Ulozeno",category="info")
+    return render_template('public/dite.tmpl', form=form)

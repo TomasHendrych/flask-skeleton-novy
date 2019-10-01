@@ -66,3 +66,4 @@ class RegistrationForm(Form):
         Length(min=6, max=30, message="Please use between 6 and 30 characters"),
         InputRequired(message="You can't leave this empty")
     ])
+
