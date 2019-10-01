@@ -30,13 +30,24 @@ class LogUser(CRUDModel):
 class Child(CRUDModel):
     __tablename__ = 'child'
     id = Column(Integer, primary_key=True)
-    parent_id = Column(Integer, ForeignKey("parent.id"))
-    jmeno = Column(String,nullable=False, index=True)
+    parent_id = Column(Integer, ForeignKey('parent.id'))
+    jmeno = Column(String, nullable=False, index=True)
+    ''' @staticmethod
+    def add_row(prijmeni,jmeno):
+        id = db.session.query(Parent.id).\
+            filter(Parent.prijmeni == prijmeni).first()
+        if id[0] is False:
+            return "ID not exist"
+        child = Child(parent_id = id[0], jmeno = jmeno)
+        db.session.add(child)
+        db.session.commit()
+        return "New row Ok"
+    '''
 
 class Parent(CRUDModel):
-    __tablename__ = "parent"
-    __table_args__ = {"sqlite_autoincrement": True}
-    id = Column(Integer, primary_key = True)
+    __tablename__ = 'parent'
+    __table_args__ =  {'sqlite_autoincrement': True}
+    id = Column(Integer, primary_key=True)
     children = relationship("Child",backref="parent")
     prijmeni = Column(String, nullable=False, index=True)
     pohlavi = Column(Integer, default=1)

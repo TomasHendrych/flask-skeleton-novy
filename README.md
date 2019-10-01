@@ -30,12 +30,14 @@ Here's the stuff you get right off the bat when using Flask-Skeleton:
 ### Quickstart
 Because sometimes you just want to see it work
 ```
-
-git clone https://github.com/TomasHendrych/flask-skeleton-ready
+git clone https://github.com/TomasHendrych/flask-skeleton-novy
+cd flask-skeleton-novy
 virtualenv -p python2 ../.venv
 . ../.venv/bin/activate
 pip install -r requirements.txt
-python -c 'import os; print "APP_KEY={}".format(os.urandom(24))' > .env  # Generates random secret key for the app
+
+# Generate random secret key for the app
+python -c 'import os; print "APP_KEY={}".format(os.urandom(24))' > .env
 
 
 #mazani starych migrations
@@ -49,9 +51,6 @@ python manage.py db upgrade
 
 #spusteni serveru
 ./manage.py runserver
-
-
-
 
 ```
 
@@ -108,7 +107,8 @@ Once you've installed all the dependencies, prepared a database, and configured 
 
 You may also specify the port and host like so:
 ```
-./manage.py runserver --port=8080 --host=0.0.0.0  # listening on port 8080 to requests coming from any source
+./manage.py runserver --port=8080 --host=0.0.0.0
+# listening on port 8080 to requests coming from any source
 ```
 
 By default, the app runs using the `DevelopmentConfig` configuration defined in  the `settings` module. To point to a different configuration module, you can set the `APP_ENV` variable:

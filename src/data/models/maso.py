@@ -13,6 +13,7 @@ class Maso(CRUDModel):
     typ = Column(Integer, nullable=False, index=False)#1=hovezi,2=vepr,3=kure
     cast = Column(Integer, nullable=False, index=True)#1=predni,2=zadni
     cena = Column(Float, nullable=True,default=0)
+
     # Use custom constructor
     # pylint: disable=W0231
     def __init__(self, **kwargs):

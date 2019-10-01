@@ -49,15 +49,18 @@ class vstupnitestform(Form):
         Length(min=3, max=8, message="Please use between 3 and 8 characters"),
         InputRequired(message="You can't leave this empty")
     ])
-
-    otazka1 = IntegerField('Jake je nejmensi prvocislo', validators=[
+    otazka1 = IntegerField('Kolik je 5*8', validators=[
         InputRequired(message="You can't leave this empty")
     ])
-    otazka2= IntegerField('Jake je nejvetsi sude prvocislo', validators=[
+    otazka2 = IntegerField('Kolik je 9*9', validators=[
         InputRequired(message="You can't leave this empty")
     ])
-    otazka3 = TextField('Anglicky kohout', validators=[
-        Length(min=4, max=4, message="Please use 4 characters"),
+    otazka3 = TextField('Co je dnes za den', validators=[
         InputRequired(message="You can't leave this empty")
     ])
 
+class ValidateParent(Form):
+    prijmeni = TextField("prijmeni",validators=[
+        InputRequired(message="You can't leave this empty")])
+    pohlavi = SelectField("pohlavi",choices=[(1,"muz"),(2,"zena")],validators=[
+        InputRequired(message="You can't leave this empty")])

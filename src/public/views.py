@@ -2,10 +2,11 @@
 Logic for dashboard related routes
 """
 from flask import Blueprint, render_template
-from .forms import LogUserForm, secti,masoform, vstupnitestform
+from .forms import LogUserForm, secti,masoform,vstupnitestform
 from ..data.database import db
 from ..data.models import LogUser
 blueprint = Blueprint('public', __name__)
+
 @blueprint.route('/', methods=['GET'])
 def index():
     return render_template('public/index.tmpl')
@@ -39,23 +40,22 @@ def masof():
 @blueprint.route('/vstupni_test', methods=['GET','POST'])
 def vstupnitest():
     from ..data.models import Vysledky
-    from sqlalchemy import  func
     from flask import flash
     form = vstupnitestform()
     if form.validate_on_submit():
-        vysledek=0
-        if form.otazka1.data == 2:
-            vysledek = vysledek + 1
-        if form.otazka2.data == 2:
-            vysledek = vysledek + 1
-        if form.otazka3.data.upper() == "COCK" :
-            vysledek = vysledek + 1
-        i = Vysledky(username=form.Jmeno.data, hodnoce=vysledek)
+        vysledek = 0
+        if form.otazka1.data == 40:
+            vysledek += 1
+        if form.otazka2.data == 81:
+            vysledek += 1
+        if form.otazka3.data.upper() == "PONDELI":
+            vysledek += 1
+        i = Vysledky(username=form.Jmeno.data, hodnoceni=vysledek)
         db.session.add(i)
         db.session.commit()
-        dotaz = db.session.query(Vysledky.username,func.count(Vysledky.hodnoce).label("suma")).group_by(Vysledky.username)
-        return render_template('public/vysledekvystup.tmpl', data=dotaz)
-    return render_template('public/vstupnitest.tmpl', form=form)
+        flash("Vysledek ulozen", category="Error")
+        return "ok"
+    return render_template('public/vstup.tmpl', form=form)
 
 @blueprint.route('/nactenijson', methods=['GET','POST'])
 def nactenijson():
@@ -64,28 +64,27 @@ def nactenijson():
     os.environ['NO_PROXY'] = '127.0.0.1'
     proxies = {
         "http": None,
-        "https": "https://192.168.1.1.800",
+        "https": "http://192.168.1.1:800"
     }
     response = requests.get("http://192.168.10.1:5000/nactenijson")
     json_res = response.json()
     data = []
     for radek in json_res["list"]:
-       data.append(radek["main"]["temp"])
+        data.append(radek["main"]["temp"])
     return render_template("public/dataprint.tmpl",data=data)
+    #return jsonify(json_res)
 
-
-
-
-from flask import Flask
-from flask import render_template
-from datetime import time
-
-app = Flask(__name__)
-
-@blueprint.route("/simple_chart", methods=['GET','POST'])
+@blueprint.route("/simple_chart")
 def chart():
     legend = 'Monthly Data'
     labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
     values = [10, 9, 8, 7, 6, 4, 7, 8]
-    return render_template('public/chart.tmpl', values=values, labels=labels, legend=legend)
+    return render_template('chart.html', values=values, labels=labels, legend=legend)
 
+@blueprint.route('/vstup_rodic',methods=['GET','POST'])
+def rodic():
+    from .forms import ValidateParent
+    form = ValidateParent()
+    if form.validate_on_submit():
+        return "OK"
+    return render_template('public/rodic.tmpl', form=form)
