@@ -60,12 +60,12 @@ class vstupnitestform(Form):
     ])
 
 class ValidateParent(Form):
-    prijmeni = TextField("prijmeni",validators=[
+    prijmeni = TextField("Prijmeni",validators=[
         InputRequired(message="You can't leave this empty")])
     pohlavi = SelectField("pohlavi",choices=[(1,"muz"),(2,"zena")],validators=[
         InputRequired(message="You can't leave this empty")])
 
 class ValidateChild(Form):
     parent_id = SelectField(choices=())
-    jmeno = TextField("prijmeni",validators=[
+    jmeno = TextField("Jmeno",validators=[
         InputRequired(message="You can't leave this empty")])

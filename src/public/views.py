@@ -98,7 +98,7 @@ def rodic():
 def dite():
     from .forms import ValidateChild
     form = ValidateChild()
-    form.parent_id.data = db.session.query(Parent).all()
+    form.parent_id.choices = db.session.query(Parent.id, Parent.prijmeni).all()
     if form.is_submitted():
         Child.create(**form.data)
         flash(message="Ulozeno",category="info")
