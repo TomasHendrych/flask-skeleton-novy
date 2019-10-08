@@ -52,3 +52,14 @@ class Parent(CRUDModel):
     prijmeni = Column(String, nullable=False, index=True)
     pohlavi = Column(Integer, default=1)
 
+class vypis(CRUDModel):
+    __tablename__ = 'vypis'
+    __table_args__ =  {'sqlite_autoincrement': True}
+    rodic = Column(String, nullable=False, index=True)
+    dite = Column(String, nullable=False, index=True)
+
+class Vozidla(CRUDModel):
+    __tablename__ = 'vozidla'
+    __table_args__ =  {'sqlite_autoincrement': True}
+    typ = Column(String, nullable=False, index=True)
+    spz = Column(String, nullable=False, index=True)

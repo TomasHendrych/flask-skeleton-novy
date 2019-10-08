@@ -69,3 +69,15 @@ class ValidateChild(Form):
     parent_id = SelectField(choices=())
     jmeno = TextField("Jmeno",validators=[
         InputRequired(message="You can't leave this empty")])
+
+class Rodic_dite(Form):
+    prijmeni = SelectField(choices=())
+    jmeno = SelectField(choices=())
+
+class Vozidlo(Form):
+    typ = TextField('Typ vozidla', validators=[
+        InputRequired(message="You can't leave this empty")
+    ])
+    spz = TextField('spz', validators=[
+        InputRequired(message="You can't leave this empty"),
+    ])

@@ -103,3 +103,25 @@ def dite():
         Child.create(**form.data)
         flash(message="Ulozeno",category="info")
     return render_template('public/dite.tmpl', form=form)
+
+@blueprint.route('/vypis',methods=['GET','POST'])
+def vypis():
+    from .forms import Rodic_dite
+    from ..data.models.loguzivatele import vypis
+    form = Rodic_dite()
+    form.prijmeni.choices = db.session.query(Parent.id, Parent.prijmeni).all()
+    form.jmeno.choices = db.session.query(Child.id, Child.jmeno).all()
+    if form.is_submitted():
+        vypis.create(**form.data)
+        flash(message="Ulozeno",category="info")
+    return render_template('public/vypis.tmpl', form=form)
+
+@blueprint.route('/vozidlo',methods=['GET','POST'])
+def vozidlo():
+    from .forms import Vozidlo
+    from ..data.models import Vozidla
+    form = Vozidlo()
+    if form.is_submitted():
+        Vozidla.create(**form.data)
+        flash(message="Ulozeno",category="info")
+    return render_template('public/vozidlo.tmpl', form=form)
