@@ -15,4 +15,4 @@ cssmin
 gunicorn==0.17.2
 #psycopg2==2.5.2
 pyscss
-sqlalchemy==0.9.3
+sqlalchemy==1.3.0
