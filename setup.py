@@ -26,7 +26,7 @@ dependencies = [
     # Database
     "alembic==0.6.5",
     "psycopg2==2.5.2",
-    "sqlalchemy==0.9.3",
+    "sqlalchemy==1.3.0",
     # Testing
     "pytest==2.5.2",
     "webtest==2.0.15",
